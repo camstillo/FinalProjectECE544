@@ -1,32 +1,32 @@
 '''
+serial class
+
+@author Cameron Castillo
+
 @brief
 
 This file is used to provide the functionality for a tkinter GUI controlling 
 the UART interface to the backscatter test platform. This performs two 
 functions:
 
-    1: initiate transmissions by transmitting 's'
-    2: write data by transmitting 'a' + [data]
+    1: Initiate transmissions by transmitting 's'
+    2: Write data by transmitting 'a' + [data]
 
 This is just a test platform and not necessarily fully functional. Additional 
 functionality may be added in the future to write to registers within the RTL.
 
-@author Cameron Castillo
-
-@note See gui.py to load the GUI made from tkinter
+@note See gui_clas.py to load the GUI made from tkinter
 
 '''
 import serial as ser
 
-class zynq_interface:
+class uart:
     """
     @brief 
 
-    This class acts as an interface to the zynq using the serial port.
-    It sets up a com port, and will eventually include a register map 
-    and functions to integrate with the RTL. 
-
-    @author Cameron Castillo
+    This class acts as an interface to the uBlaze using the serial 
+    port. Use this for the low-level write functionality in the GUI
+    class
 
     """
 
@@ -34,9 +34,7 @@ class zynq_interface:
         """
         @brief
 
-        init function for zynq_interface class
-
-        @author Cameron Castillo
+        init function for uart
 
         @param baud: baud rate for zynq board (default 115200)
         @param timeout: timeout time between transmissions (default 1s)
@@ -50,8 +48,14 @@ class zynq_interface:
         self.timeout = timeout
         self.uart = None
         self.port = None
+
+        #create dictionary for command items
+        self.cmd_dict = {
+                'STATE_OVERRIDE':'o',
+                
+                }
     
-    def send_data(self, cmd, data=None):
+    def send(self, cmd, data=None):
         """
         @brief 
 
